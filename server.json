@@ -1,0 +1,21 @@
+[
+    {
+        "comment": "HL2DM [RU]",
+        "type": "GamedigQuery",
+        "game": "hl2dm",
+        "address": "202.181.188.90",
+        "port": 27015,
+        "channel": 1308651006770544673,
+        "image_url": "https://github.com/misha24real/misha24real.github.io/blob/main/i-_1_.png?raw=true",
+        "custom": "Заходи на сервер.",
+        "steam_id": 251570,
+        "direct_join": true,
+        "country": "CA",
+        "color": "#bf0b01",
+        "title": "HL2DM [RU]",
+        "public_address": "202.181.188.90:27015",
+        "locked": true,                  
+        "maxplayers": 16,
+        "hostname": "Half Life 2 Deathmatch [RU]"
+    }
+]
