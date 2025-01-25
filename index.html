@@ -1,6 +1,173 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Build GitHub Release Automation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #004d99;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #004d99;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .section p {
+            margin-bottom: 1rem;
+        }
+        .section ul {
+            list-style-type: disc;
+            margin-left: 2rem;
+        }
+        footer {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
 <body>
-<h1>привет.</h1>
-  <p>как дела?</p>
+
+<header>
+    <h1>Auto Build GitHub Release Automation</h1>
+</header>
+
+<main>
+    <section class="section">
+        <h2>📦 Описание проекта</h2>
+        <p>Скрипт автоматизирует создание релизов в GitHub с ежедневной архивацией содержимого репозитория.</p>
+    </section>
+
+    <section class="section">
+        <h2>🚀 Функциональность</h2>
+        <ul>
+            <li>Автоматическое создание архива репозитория</li>
+            <li>Генерация релиза в GitHub</li>
+            <li>Загрузка архива как asset релиза</li>
+            <li>Поддержка Windows и Linux</li>
+            <li>Настраиваемое расписание</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h2>🛠 Требования</h2>
+        <ul>
+            <li>Python 3.8+</li>
+            <li>Git</li>
+            <li>Личный токен GitHub</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h2>📋 Установка</h2>
+
+        <h3>Windows</h3>
+        <ol>
+            <li>Клонировать репозиторий:
+                <pre><code>git clone https://github.com/your-repo/auto-build-script.git
+cd auto-build-script</code></pre>
+            </li>
+            <li>Установить зависимости:
+                <pre><code>pip install -r requirements.txt</code></pre>
+            </li>
+        </ol>
+
+        <h3>Linux</h3>
+        <ol>
+            <li>Клонировать репозиторий:
+                <pre><code>git clone https://github.com/your-repo/auto-build-script.git
+cd auto-build-script</code></pre>
+            </li>
+            <li>Создать виртуальное окружение:
+                <pre><code>python3 -m venv venv
+source venv/bin/activate</code></pre>
+            </li>
+            <li>Установить зависимости:
+                <pre><code>pip install -r requirements.txt</code></pre>
+            </li>
+        </ol>
+    </section>
+
+    <section class="section">
+        <h2>🔧 Настройка</h2>
+        <p>1. Получить Personal Access Token в GitHub</p>
+        <p>2. Отредактировать <code>daily_release()</code>:</p>
+        <pre><code>repo = {
+    "path": r"/path/to/build", 
+    "git_config": {
+        "username": "your_github_username",
+        "repo": "your_repository",
+        "token": "your_github_token"
+    }
+}</code></pre>
+    </section>
+
+    <section class="section">
+        <h2>🕒 Расписание</h2>
+        <p>По умолчанию скрипт запускается ежедневно в 11:23. Изменить время в функции <code>main()</code>:</p>
+        <pre><code>schedule.every().day.at("HOUR:MINUTE").do(daily_release)</code></pre>
+    </section>
+
+    <section class="section">
+        <h2>🐍 Запуск</h2>
+        <pre><code>python app.py</code></pre>
+    </section>
+
+    <section class="section">
+        <h2>⚠️ Важно</h2>
+        <ul>
+            <li>Храните токен в секрете</li>
+            <li>Проверьте права доступа к репозиторию</li>
+            <li>Убедитесь в корректности путей</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h2>📄 Лицензия</h2>
+        <p><a href="https://github.com/themaster1970sf/AutoBuildRepo/blob/main/LICENSE" target="_blank">MIT License</a></p>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Auto Build GitHub Release Automation. Все права защищены.</p>
+</footer>
+
 </body>
 </html>
