@@ -1,0 +1,220 @@
+/* Стили для страницы сервера */
+.server-page {
+    padding: 2rem 0;
+}
+
+.server-page h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Карточка информации о сервере */
+.server-info-card {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.server-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.stat-label {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.status-online {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-offline {
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* IP секция */
+.ip-section {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.ip-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.ip-container code {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+/* Правила */
+.rules-section {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.rules-categories {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.rule-tab {
+    padding: 0.5rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    white-space: nowrap;
+}
+
+.rule-tab:hover,
+.rule-tab.active {
+    background: var(--primary-color);
+    color: #000;
+}
+
+.rule-category {
+    display: none;
+}
+
+.rule-category.active {
+    display: block;
+}
+
+.rule-category h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.rule-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.rule-category li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.rule-category li::before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+}
+
+/* Секция игроков */
+.players-section {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.player-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    transition: transform var(--transition-speed);
+}
+
+.player-card:hover {
+    transform: translateY(-2px);
+}
+
+.player-avatar {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-info h3 {
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.player-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+/* Кнопки */
+.connect-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform var(--transition-speed);
+}
+
+.button.primary {
+    background: var(--primary-color);
+    color: #000;
+}
+
+.button.secondary {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.button:hover

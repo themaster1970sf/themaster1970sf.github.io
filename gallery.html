@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Галерея скриншотов The Backrooms Server">
+    <title>Галерея | The Backrooms Server</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.html#server">Сервер</a></li>
+                    <li><a href="gallery.html" class="active">Галерея</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="gallery-page">
+            <div class="container">
+                <h1>Галерея The Backrooms</h1>
+                
+                <div class="gallery-filters">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="locations">Локации</button>
+                    <button class="filter-btn" data-filter="events">События</button>
+                    <button class="filter-btn" data-filter="players">Игроки</button>
+                </div>
+
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="locations">
+                        <img src="https://themaster1970sf.github.io/1.png" 
+                             alt="Коридоры The Backrooms"
+                             loading="lazy">
+                        <div class="gallery-item-info">
+                            <h3>m.@.s.t.e.r в комнате отдыха админов</h3>
+                            <p>Будующая комната отдыха админов.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item" data-category="events">
+                        <img src="https://themaster1970sf.github.io/image.png" 
+                             alt="Встреча игроков"
+                             loading="lazy">
+                        <div class="gallery-item-info">
+                            <h3>Телевизор</h3>
+                            <p>Что он тут забыл?</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item" data-category="locations">
+                        <img src="https://themaster1970sf.github.io/image2.png" 
+                             alt="Тайны The Backrooms"
+                             loading="lazy">
+                        <div class="gallery-item-info">
+                            <h3>Это Джони</h3>
+                            <p>Класный парень</p>
+                        </div>
+                    </div>
+
+                    <!-- Добавьте больше изображений по мере необходимости -->
+                </div>
+
+                <div id="lightbox" class="lightbox">
+                    <span class="close-lightbox">&times;</span>
+                    <img id="lightbox-img" src="" alt="Увеличенное изображение">
+                    <div class="lightbox-info">
+                        <h3 id="lightbox-title"></h3>
+                        <p id="lightbox-description"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>&copy; 2025 The Backrooms Server. Все права защищены.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Фильтрация изображений
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Удаляем активный класс у всех кнопок
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Добавляем активный класс нажатой кнопке
+                button.classList.add('active');
+
+                const filter = button.dataset.filter;
+
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Лайтбокс
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxDescription = document.getElementById('lightbox-description');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const info = item.querySelector('.gallery-item-info');
+
+                lightboxImg.src = img.src;
+                lightboxTitle.textContent = info.querySelector('h3').textContent;
+                lightboxDescription.textContent = info.querySelector('p').textContent;
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Закрытие лайтбокса
+        document.querySelector('.close-lightbox').addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Информация о сервере The Backrooms - IP, правила, статистика">
+    <title>Сервер | The Backrooms</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="server.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="server.html" class="active">Сервер</a></li>
+                    <li><a href="gallery.html">Галерея</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="server-page">
+            <div class="container">
+                <h1>Информация о сервере</h1>
+
+                <!-- Основная информация о сервере -->
+                <section class="server-info-card">
+                    <h2>Подключение к серверу</h2>
+                    <div class="server-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Статус:</span>
+                            <span id="server-status" class="status-online">Онлайн</span>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <span class="stat-label">Карта:</span>
+                            <span id="current-map">gm_br_pitfalls</span>
+                        </div>
+                    </div>
+                    <div class="ip-section">
+                        <h3>IP сервера</h3>
+                        <div class="ip-container">
+                            <code id="server-ip">107.161.154.242:27015</code>
+                            <button class="copy-button" onclick="copyIP()">
+                                <span class="copy-icon">📋</span>
+                                <span class="copy-text">Копировать IP</span>
+                            </button>
+                        </div>
+                        <div id="copy-notification" class="notification" hidden>IP скопирован!</div>
+                    </div>
+                    <div class="connect-buttons">
+                        <a href="steam://connect/107.161.154.242:27015" class="button primary">
+                            Подключиться через Steam
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Правила сервера -->
+                <section class="rules-section">
+                    <h2>Правила сервера</h2>
+                    <div class="rules-container">
+                        <div class="rules-categories">
+                            <button class="rule-tab active" data-category="general">Общие правила</button>
+                            <button class="rule-tab" data-category="gameplay">Игровой процесс</button>
+                            <button class="rule-tab" data-category="chat">Чат и общение</button>
+                            <button class="rule-tab" data-category="moderation">Модерация</button>
+                        </div>
+                        <div class="rules-content">
+                            <div class="rule-category active" id="general">
+                                <h3>Общие правила</h3>
+                                <ul>
+                                    <li>Запрещены читы и сторонние программы</li>
+                                    <li>Запрещено использование багов и эксплойтов</li>
+                                    <li>Запрещено распространение ложной информации</li>
+                                </ul>
+                            </div>
+                            <div class="rule-category" id="gameplay">
+                                <h3>Правила игрового процесса</h3>
+                                <ul>
+                                    <li>Не мешайте другим игрокам исследовать уровни</li>
+                                    <li>Запрещено намеренно убивать других игроков</li>
+                                    <li>Помогайте новичкам адаптироваться</li>
+                                </ul>
+                            </div>
+                            <div class="rule-category" id="chat">
+                                <h3>Правила чата</h3>
+                                <ul>
+                                    <li>Запрещены оскорбления и токсичное поведение</li>
+                                    <li>Запрещена реклама сторонних ресурсов</li>
+                                    <li>Общение только на русском и английском языках</li>
+                                </ul>
+                            </div>
+                            <div class="rule-category" id="moderation">
+                                <h3>Правила модерации</h3>
+                                <ul>
+                                    <li>Решения администрации обязательны к исполнению</li>
+                                    <li>Баны выдаются на усмотрение модераторов</li>
+                                    <li>Апелляции рассматриваются в Discord сервере</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="rules-footer">
+                            <a href="https://docs.google.com/document/d/1vOzNDfNrIJQkHr0dqa8wRHD3PodD8PWbgJfRWMN5fQg/edit?tab=t.0" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="button secondary">
+                                Полные правила
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Онлайн игроки -->
+                
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>&copy; 2025 The Backrooms Server. Все права защищены.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Копирование IP
+        function copyIP() {
+            const ip = document.getElementById('server-ip').textContent;
+            const notification = document.getElementById('copy-notification');
+            
+            navigator.clipboard.writeText(ip)
+                .then(() => {
+                    notification.removeAttribute('hidden');
+                    setTimeout(() => {
+                        notification.setAttribute('hidden', '');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования:', err);
+                    alert('Не удалось скопировать IP. Пожалуйста, скопируйте вручную.');
+                });
+        }
+
+        // Переключение вкладок правил
+        const ruleTabs = document.querySelectorAll('.rule-tab');
+        const ruleCategories = document.querySelectorAll('.rule-category');
+
+        ruleTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Убираем активный класс у всех вкладок и категорий
+                ruleTabs.forEach(t => t.classList.remove('active'));
+                ruleCategories.forEach(c => c.classList.remove('active'));
+
+                // Добавляем активный класс выбранной вкладке
+                tab.classList.add('active');
+
+                // Показываем соответствующую категорию
+                const category = tab.dataset.category;
+                document.getElementById(category).classList.add('active');
+            });
+        });
+
+        // Имитация обновления статуса сервера
+        function updateServerStats() {
+            const playerCount = Math.floor(Math.random() * 32);
+            document.getElementById('player-count').textContent = `${playerCount}/32`;
+            
+            // Имитация списка игроков
+            const players = [
+                { name: "Player1", level: "Level 0", time: "2ч 15м" },
+                { name: "Player2", level: "Level 1", time: "1ч 30м" },
+                // Добавьте больше игроков при необходимости
+            ];
+
+            const playersGrid = document.getElementById('online-players');
+            playersGrid.innerHTML = players.map(player => `
+                <div class="player-card">
+                    <div class="player-avatar"></div>
+                    <div class="player-info">
+                        <h3>${player.name}</h3>
+                        <p>Уровень: ${player.level}</p>
+                        <p>Время в игре: ${player.time}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Обновляем статистику каждые 30 секунд
+        updateServerStats();
+        setInterval(updateServerStats, 30000);
+    </script>
+</body>
+</html>
