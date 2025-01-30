@@ -7,46 +7,42 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Добро пожаловать в The Backrooms</h1>
-            <p>Затеряйтесь в бесконечных коридорах...</p>
-        </header>
-        <main>
-            <section class="intro">
-                <h2>Вы попали в The Backrooms</h2>
-                <p>Это место, где реальность искажена, а коридоры кажутся бесконечными.</p>
-            </section>
-            <section class="server-info">
-                <h2>Информация о сервере</h2>
-                <div class="info-grid">
-                    <div class="info-card">
-                        <h3>IP сервера</h3>
-                        <p><code>your.server.ip:27015</code></p>
-                        <button onclick="copyIP()">Скопировать IP</button>
-                    </div>
-                    
-                    <div class="info-card">
-                        <h3>Правила</h3>
-                        <p>Соблюдайте правила сервера, чтобы не быть забаненным.</p>
-                        <a href="https://docs.google.com/document/d/1vOzNDfNrIJQkHr0dqa8wRHD3PodD8PWbgJfRWMN5fQg/edit?tab=t.0">Подробнее</a>
-                    </div>
+    <header>
+        <h1>Добро пожаловать в The Backrooms</h1>
+        <p>Затеряйтесь в бесконечных коридорах...</p>
+    </header>
+    <main>
+        <section class="intro">
+            <h2>Вы попали в The Backrooms</h2>
+            <p>Это место, где реальность искажена, а коридоры кажутся бесконечными. Ваша цель — выжить и найти выход.</p>
+        </section>
+        <section class="server-info">
+            <h2>Информация о сервере</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>IP сервера</h3>
+                    <p><code>your.server.ip:27015</code></p>
+                    <button onclick="copyIP()">Скопировать IP</button>
                 </div>
-            </section>
-            <section class="gallery">
-                <h2>Галерея</h2>
-                <div class="image-grid">
-                    <img src="https://themaster1970sf.github.io/1.png" alt="Скриншот 1">
-                    <img src="https://themaster1970sf.github.io/image.png" alt="Скриншот 2">
-                    <img src="https://themaster1970sf.github.io/image2.png" alt="Скриншот 3">
+                <div class="info-card">
+                    <h3>Правила</h3>
+                    <p>Соблюдайте правила сервера, чтобы не быть забаненным.</p>
+                    <a href="https://docs.google.com/document/d/1vOzNDfNrIJQkHr0dqa8wRHD3PodD8PWbgJfRWMN5fQg/edit?tab=t.0">Подробнее</a>
                 </div>
-            </section>
-
-        </main>
-        <footer>
-            <p>© 2025 The Backrooms Server.</p>
-        </footer>
-    </div>
+            </div>
+        </section>
+        <section class="gallery">
+            <h2>Галерея</h2>
+            <div class="image-grid">
+                <img src="https://themaster1970sf.github.io/1.png" alt="Скриншот 1">
+                <img src="https://themaster1970sf.github.io/image.png" alt="Скриншот 2">
+                <img src="https://themaster1970sf.github.io/image2.png" alt="Скриншот 3">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 The Backrooms Server.</p>
+    </footer>
     <script>
         function copyIP() {
             const ip = "your.server.ip:27015";
@@ -54,11 +50,6 @@
                 alert("IP скопирован в буфер обмена!");
             });
         }
-
-        // Пример функции для отображения игроков онлайн (заглушка)
-        setTimeout(() => {
-            document.getElementById("players-online").textContent = "12/24";
-        }, 1000);
     </script>
 </body>
 </html>
