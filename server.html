@@ -25,37 +25,27 @@
             <div class="container">
                 <h1>Информация о сервере</h1>
 
-                <!-- Основная информация о сервере -->
-                <section class="server-info-card">
-                    <h2>Подключение к серверу</h2>
-                    <div class="server-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">Статус:</span>
-                            <span id="server-status" class="status-online">Онлайн</span>
-                        </div>
-                        
-                        <div class="stat-item">
-                            <span class="stat-label">Карта:</span>
-                            <span id="current-map">gm_br_pitfalls</span>
-                        </div>
-                    </div>
-                    <div class="ip-section">
-                        <h3>IP сервера</h3>
-                        <div class="ip-container">
-                            <code id="server-ip">107.161.154.242:27015</code>
-                            <button class="copy-button" onclick="copyIP()">
-                                <span class="copy-icon">📋</span>
-                                <span class="copy-text">Копировать IP</span>
-                            </button>
-                        </div>
-                        <div id="copy-notification" class="notification" hidden>IP скопирован!</div>
-                    </div>
-                    <div class="connect-buttons">
-                        <a href="steam://connect/107.161.154.242:27015" class="button primary">
-                            Подключиться через Steam
-                        </a>
-                    </div>
-                </section>
+                <section class="online-players-card">
+    <h2>Игроки онлайн</h2>
+    <div class="server-stats">
+        <div class="stat-item">
+            <span class="stat-label">Игроки:</span>
+            <span id="maxplayers">0/0</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Режим:</span>
+            <span id="gamemode">Loading...</span>
+        </div>
+    </div>
+    <div id="status-info">
+        <p>Статус: <span id="status">Retrieving Server Info...</span></p>
+        <p>Загрузка: <span id="fileDL">No Files Downloading</span> [<span id="percent">0</span>%]</p>
+        <p>Файлы: <span id="needed">Needed</span>/<span id="total">Total</span></p>
+    </div>
+    <div class="progress-bar">
+        <div class="determinate" id="progressbar" style="width: 0%"></div>
+    </div>
+</section>
 
                
 
@@ -66,77 +56,77 @@
 
         <footer class="site-footer">
             <div class="container">
-                <p>&copy; 2025 The Backrooms Server. Все права защищены.</p>
+                <p>&copy; 2025 Lobotomy Corporation</p>
             </div>
         </footer>
     </div>
 
     <script>
-        // Копирование IP
         function copyIP() {
-            const ip = document.getElementById('server-ip').textContent;
-            const notification = document.getElementById('copy-notification');
-            
-            navigator.clipboard.writeText(ip)
-                .then(() => {
-                    notification.removeAttribute('hidden');
-                    setTimeout(() => {
-                        notification.setAttribute('hidden', '');
-                    }, 2000);
-                })
-                .catch(err => {
-                    console.error('Ошибка копирования:', err);
-                    alert('Не удалось скопировать IP. Пожалуйста, скопируйте вручную.');
-                });
-        }
-
-        // Переключение вкладок правил
-        const ruleTabs = document.querySelectorAll('.rule-tab');
-        const ruleCategories = document.querySelectorAll('.rule-category');
-
-        ruleTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Убираем активный класс у всех вкладок и категорий
-                ruleTabs.forEach(t => t.classList.remove('active'));
-                ruleCategories.forEach(c => c.classList.remove('active'));
-
-                // Добавляем активный класс выбранной вкладке
-                tab.classList.add('active');
-
-                // Показываем соответствующую категорию
-                const category = tab.dataset.category;
-                document.getElementById(category).classList.add('active');
-            });
+    const ip = document.getElementById('server-ip').textContent;
+    const notification = document.getElementById('copy-notification');
+    
+    navigator.clipboard.writeText(ip)
+        .then(() => {
+            notification.removeAttribute('hidden');
+            setTimeout(() => {
+                notification.setAttribute('hidden', '');
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Ошибка копирования:', err);
+            alert('Не удалось скопировать IP. Пожалуйста, скопируйте вручную.');
         });
+}
 
-        // Имитация обновления статуса сервера
-        function updateServerStats() {
-            const playerCount = Math.floor(Math.random() * 32);
-            document.getElementById('player-count').textContent = `${playerCount}/32`;
-            
-            // Имитация списка игроков
-            const players = [
-                { name: "Player1", level: "Level 0", time: "2ч 15м" },
-                { name: "Player2", level: "Level 1", time: "1ч 30м" },
-                // Добавьте больше игроков при необходимости
-            ];
+// Game details update function
+function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice) {
+    document.getElementById('current-map').textContent = mapname;
+    document.getElementById('maxplayers').textContent = `0/${maxplayers}`;
+    document.getElementById('gamemode').textContent = gamemodeNice || gamemode;
+}
 
-            const playersGrid = document.getElementById('online-players');
-            playersGrid.innerHTML = players.map(player => `
-                <div class="player-card">
-                    <div class="player-avatar"></div>
-                    <div class="player-info">
-                        <h3>${player.name}</h3>
-                        <p>Уровень: ${player.level}</p>
-                        <p>Время в игре: ${player.time}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
+// File download status
+function DownloadingFile(fileName) {
+    document.getElementById('fileDL').textContent = fileName;
+}
 
-        // Обновляем статистику каждые 30 секунд
-        updateServerStats();
-        setInterval(updateServerStats, 30000);
+// Status text update
+function SetStatusChanged(status) {
+    document.getElementById('status').textContent = status;
+}
+
+// Progress update
+function SetFilesTotal(total) {
+    document.getElementById('total').textContent = total;
+}
+
+function SetFilesNeeded(needed) {
+    document.getElementById('needed').textContent = needed;
+}
+
+function SetProgress(percent) {
+    document.getElementById('percent').textContent = percent;
+    document.getElementById('progressbar').style.width = percent + '%';
+}
+
+// Server stats update
+function updateServerStats() {
+    fetch('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=F2F958828742F45D7724697523253AE4&steamids=85568392931643197')
+        .then(response => response.json())
+        .then(data => {
+            const players = data.response.players;
+            if (players && players.length > 0) {
+                const playerCount = players.length;
+                document.getElementById('maxplayers').textContent = `${playerCount}/32`;
+            }
+        })
+        .catch(error => console.error('Error fetching server stats:', error));
+}
+
+// Обновляем статистику каждые 30 секунд
+updateServerStats();
+setInterval(updateServerStats, 30000);
     </script>
 </body>
 </html>
