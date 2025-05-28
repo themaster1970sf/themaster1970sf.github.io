@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Backrooms - Экран загрузки для сервера">
+    <meta name="keywords" content="backrooms, game server, gaming">
+    <title>Загрузочный экран</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            position: relative;
+        }
+
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 2s ease-in-out;
+            filter: brightness(0.7) contrast(1.2);
+        }
+
+        #background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 0, 0.1) 0%,
+                rgba(0, 0, 0, 0.8) 50%,
+                rgba(139, 69, 19, 0.2) 100%
+            );
+            z-index: 1;
+        }
+
+        #container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .logo {
+            width: 300px;
+            height: auto;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 0, 0.5));
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 255, 0, 0.6);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 255, 0, 1), 0 0 40px rgba(255, 255, 0, 0.8);
+            }
+        }
+
+        .walk {
+            font-size: 3rem;
+            animation: spin 3s linear infinite;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .server_info {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 0, 0.5);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.5s ease-in-out;
+            z-index: 3;
+            box-shadow: 0 0 30px rgba(255, 255, 0, 0.3);
+        }
+
+        .server_info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .server_info .text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .server_info span {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #serverName {
+            color: #ffff00;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+        }
+
+        #serverMap {
+            color: #00ff00;
+            font-weight: 400;
+        }
+
+        #serverGamemode {
+            color: #ff6600;
+            font-weight: 400;
+        }
+
+        .loading-progress {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            z-index: 3;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffff00, #ff6600, #ffff00);
+            background-size: 200% 100%;
+            animation: progressShine 2s linear infinite;
+            width: 0%;
+            transition: width 0.3s ease-out;
+        }
+
+        @keyframes progressShine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 0, 0.7);
+            border-radius: 50%;
+            animation: float 15s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        body.dark {
+            filter: brightness(0.8) contrast(1.3);
+        }
+
+        body.dark #background::before {
+            background: linear-gradient(
+                45deg,
+                rgba(139, 69, 19, 0.3) 0%,
+                rgba(0, 0, 0, 0.9) 50%,
+                rgba(255, 255, 0, 0.1) 100%
+            );
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                width: 200px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .server_info {
+                bottom: 30px;
+                left: 30px;
+                right: 30px;
+                padding: 15px;
+            }
+            
+            .server_info .text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div id="container">
+        <div class="logo-placeholder" style="width: 300px; height: 120px; background: linear-gradient(45deg, #ffff00, #ff6600); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; color: #000; text-shadow: none; animation: bounce 2s infinite ease-in-out;">
+            SandBox
+        </div>
+        <h2>Загрузка...</h2>
+        <div class="walk">❊</div>
+    </div>
+
+    <div class="server_info">
+        <div class="text">
+            <span id="serverName">Подключение к серверу...</span>
+            <span id="serverMap">Загрузка карты...</span>
+            <span id="serverGamemode">Инициализация...</span>
+        </div>
+    </div>
+
+    <div class="loading-progress">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Подготовка к подключению...</div>
+    </div>
+
+    <div id="spambox" style="display: none;"></div>
+
+    <script>
+        // Массив фоновых изображений
+        const backgrounds = [
+            'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?w=1920&h=1080&fit=crop'
+        ];
+
+        let currentBgIndex = 0;
+        const backgroundElement = document.getElementById('background');
+
+        // Функция смены фона
+        function changeBackground() {
+            backgroundElement.style.backgroundImage = `url(${backgrounds[currentBgIndex]})`;
+            currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+        }
+
+        // Создание частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Симуляция прогресса загрузки
+        function simulateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            let progress = 0;
+            
+            const progressTexts = [
+                'Подключение к серверу...',
+                'Загрузка ресурсов...',
+                'Синхронизация данных...',
+                'Подготовка игрового мира...',
+                'Завершение загрузки...'
+            ];
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 3;
+                if (progress > 100) progress = 100;
+                
+                progressFill.style.width = progress + '%';
+                
+                const textIndex = Math.floor((progress / 100) * (progressTexts.length - 1));
+                progressText.textContent = progressTexts[textIndex];
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    progressText.textContent = 'Готово!';
+                }
+            }, 200);
+        }
+
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            const today = new Date();
+            const isHalloween = today.getMonth() == 10 && today.getDate() >= 15 || today.getMonth() == 11 && today.getDate() <= 5;
+            const darkMode = today.getHours() >= 19 || today.getHours() <= 7;
+            const isSupportsSystemDarkMode = navigator.userAgent.match(/Chrome\/(\d+)/)?.[1] >= 76;
+            const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (isHalloween || (isSupportsSystemDarkMode ? systemDarkMode : darkMode)) {
+                document.body.classList.add("dark");
+            }
+
+            // Первоначальная установка фона
+            changeBackground();
+            
+            // Смена фона каждые 5 секунд
+            setInterval(changeBackground, 5000);
+            
+            // Создание частиц
+            createParticles();
+            
+            // Запуск симуляции прогресса
+            simulateProgress();
+            
+            // Показать информацию о сервере через 2 секунды
+            setTimeout(() => {
+                document.querySelector('.server_info').classList.add('visible');
+            }, 2000);
+        };
+
+        // Функция для получения информации о сервере
+        function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice) {
+            document.getElementById("serverName").textContent = servername;
+            document.getElementById("serverMap").textContent = mapname;
+            document.getElementById("serverGamemode").textContent = gamemodeNice || gamemode;
+            document.querySelector(".server_info").classList.add("visible");
+        }
+
+        // Функция для обработки загрузки файлов
+        function DownloadingFile(file) {
+            document.getElementById('progressText').textContent = `Загрузка: ${file}`;
+        }
+
+        // Функция для изменения статуса
+        function SetStatusChanged(status) {
+            document.getElementById('progressText').textContent = status;
+        }
+    </script>
+</body>
+</html>
